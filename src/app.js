@@ -3,7 +3,8 @@ import { BaileysProvider } from '@builderbot/provider-baileys';
 import { allFlows } from './flows/index.js';
 import { initializeDataFiles } from './utils/flow-manager.js';
 import dotenv from 'dotenv';
-import { httpInject } from "@builderbot-plugins/openai-assistants"
+import { httpInject } from "@builderbot-plugins/openai-assistants";
+import { initializeDynamoStorage } from './utils/initializeDynamoDB.js';
 
 // Initialize environment variables
 dotenv.config();
@@ -20,6 +21,9 @@ const main = async () => {
     try {
         // Initialize data files and directories
         await initializeDataFiles();
+
+        // En tu función main:
+        await initializeDynamoStorage('user123'); // O el userId que prefieras
 
         // Initialize adapters
         const adapterDB = new MemoryDB();

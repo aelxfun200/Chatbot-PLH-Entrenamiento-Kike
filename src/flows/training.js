@@ -6,7 +6,7 @@ import { format } from 'date-fns';
 import dotenv from 'dotenv';
 import { log } from 'console';
 import { toAsk } from "@builderbot-plugins/openai-assistants";
-
+import { getPrompt } from '../utils/promptHandler.js';
 
 
 // Initialize environment variables
@@ -41,6 +41,8 @@ const message_delay_file = readFileSync(VARIABLES_CHAT, 'utf-8');
 var variables_chat_json = JSON.parse(message_delay_file);
 var message_delay = variables_chat_json.delay_Time_Response;
 
+//Get prompts from AWS
+const prompt = await getPrompt('prompt', 'user123');
 
 
 // Enhanced logging function
@@ -55,10 +57,11 @@ const logInfo = (context, message, data = null) => {
 };
 
 logInfo("tiempo de respuesta incial: ", message_delay);
+logInfo("prompt de la BD", prompt);
 
 // Function to obtain the prompt required
 
-const getPrompt = async (requested_prompt) => {
+/*const getPrompt = async (requested_prompt) => {
     try {
         const text = readFileSync(requested_prompt, 'utf-8')
         logInfo(text);
@@ -68,7 +71,7 @@ const getPrompt = async (requested_prompt) => {
         console.error('Error al leer el prompt:', error);
         return null;
     }
-};
+};*/
 
 
 // Function to process audio messages
